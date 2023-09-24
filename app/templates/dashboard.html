@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | FileUploader</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a href="" class="navbar-brand">Dashboard | FileUploader</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="{% url "dashboard" 'logout' %}" class="btn btn-danger btn-sm">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 mx-auto">
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-success">
+                        {{message}}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{% url "dashboard" %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="file" class="small text-muted">File</label>
+                                <input type="file" name="file" id="file" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <input type="submit" value="Upload" class="btn-danger btn">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>#ID</th>
+                            <th>File Name</th>
+                            <th>Date Time</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for file in files %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{file.file}}</td>
+                            <td>{{file.date_time}}</td>
+                            <td>
+                                <a href="{% url "file-delete" file.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="{{file.file.url}}" class="btn btn-info btn-sm" download>Download</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-lg-7 mx-auto">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-danger">
+            {{message}}
+        </div>
+        {% endfor %}
+    {% endif %}
+    <div class="card shadow-sm">
+        <div class="card-header">
+            User SignUp
+        </div>
+        <div class="card-body">
+            <form action="{% url "signup" %}" method="post">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <label for="fname" class="small text-muted">First Name</label>
+                        <input type="text" name="fname" id="fname" class="form-control">
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="lname" class="small text-muted">Last Name</label>
+                        <input type="text" name="lname" id="lname" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="username" class="small text-muted">Username</label>
+                    <input type="text" name="username" id="username" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="small text-muted">Email</label>
+                    <input type="email" name="email" id="email" class="form-control">
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <label for="password" class="small text-muted">Password</label>
+                        <input type="password" name="password" id="password" class="form-control">
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="re-enter-password" class="small text-muted">Re-enter Password</label>
+                        <input type="password" name="re-enter-password" id="re-enter-password" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <input type="submit" value="SignUp" class="btn btn-danger">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
